@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Calendar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+
+  <!-- CSS 분리 로드 순서: base → 컴포넌트별 → 반응형 -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/calendar.css">
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- ── HEADER ── -->
+  <header>
+    <div class="header-left">
+      <div class="logo">Cal<span>Minder</span></div>
+      <div class="month-nav">
+        <button id="prevBtn">&#8249;</button>
+        <div class="current-month" id="currentMonthLabel"></div>
+        <button id="nextBtn">&#8250;</button>
+      </div>
+      <button class="today-btn" id="todayBtn">오늘</button>
+    </div>
+    <button class="add-btn" id="openModalBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="12" y1="5" x2="12" y2="19"/>
+        <line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+      일정 추가
+    </button>
+  </header>
+
+  <!-- ── MAIN ── -->
+  <div class="main">
+
+    <!-- LEFT: Sidebar -->
+    <div class="sidebar">
+      <div class="mini-cal" id="miniCal"></div>
+      <div class="sidebar-header">
+        <h2>D-Day 목록</h2>
+        <span class="dday-count" id="ddayCount">0</span>
+      </div>
+      <div class="dday-list" id="ddayList"></div>
+    </div>
+
+    <!-- RIGHT: Calendar -->
+    <div class="calendar-panel">
+      <div class="weekday-header">
+        <div>일</div>
+        <div>월</div>
+        <div>화</div>
+        <div>수</div>
+        <div>목</div>
+        <div>금</div>
+        <div>토</div>
+      </div>
+      <div class="calendar-grid" id="calGrid"></div>
+    </div>
+
+  </div>
+
+  <!-- ── ADD EVENT MODAL ── -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <h3>새 일정 추가</h3>
+      <div class="form-group">
+        <label>일정 이름</label>
+        <input type="text" id="eventTitle" placeholder="일정 이름을 입력하세요">
+      </div>
+      <div class="form-group">
+        <label>날짜</label>
+        <input type="date" id="eventDate">
+      </div>
+      <div class="form-group">
+        <label>종류</label>
+        <div class="type-selector">
+          <button class="type-btn active-dday" id="typeDday" onclick="selectType('dday')">📍 D-Day</button>
+          <button class="type-btn" id="typeEvent" onclick="selectType('event')">📅 일반 일정</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>메모 (선택)</label>
+        <input type="text" id="eventNote" placeholder="간단한 메모">
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" id="closeModalBtn">취소</button>
+        <button class="btn-save" id="saveEventBtn">저장하기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DETAIL POPUP ── -->
+  <div class="detail-popup" id="detailPopup">
+    <button class="detail-close" id="closeDetail">✕</button>
+    <h4 id="dp-title"></h4>
+    <div class="detail-date" id="dp-date"></div>
+    <span class="detail-type" id="dp-type"></span>
+    <span class="detail-dday-num" id="dp-dday"></span>
+    <button class="detail-delete" id="dp-delete">삭제</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

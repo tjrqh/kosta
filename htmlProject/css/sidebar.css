@@ -1,0 +1,224 @@
+/* ════════════════════════════
+   css/sidebar.css
+   왼쪽 패널 · 미니캘린더 · D-Day 목록
+════════════════════════════ */
+
+/* ── 사이드바 컨테이너 ── */
+.sidebar {
+  width: 25%;
+  min-width: 200px;
+  max-width: 300px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ════════════
+   미니 캘린더
+════════════ */
+.mini-cal {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.mini-cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.mini-cal-header span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.mini-cal-header button {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 2px 5px;
+  border-radius: 4px;
+  transition: color 0.1s;
+}
+
+.mini-cal-header button:hover {
+  color: var(--text);
+}
+
+.mini-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+/* 요일 라벨 */
+.mini-grid .wd {
+  text-align: center;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  padding: 2px 0;
+  letter-spacing: 0.5px;
+}
+
+/* 날짜 셀 */
+.mini-grid .md {
+  position: relative;
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  padding: 3px 1px;
+  border-radius: 50%;
+  cursor: pointer;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.1s;
+}
+
+.mini-grid .md:hover      { background: var(--hover); }
+.mini-grid .md.mini-today { background: var(--accent); color: #fff; font-weight: 700; }
+.mini-grid .md.mini-other { color: var(--text-dim); }
+
+/* 일정 있는 날 점 표시 */
+.mini-grid .md.has-event::after {
+  content: '';
+  display: block;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--event);
+  position: absolute;
+  bottom: 1px;
+}
+
+/* ════════════
+   D-Day 헤더
+════════════ */
+.sidebar-header {
+  padding: 20px 20px 12px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sidebar-header h2 {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--dday);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.dday-count {
+  background: var(--dday);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 10px;
+  margin-left: auto;
+}
+
+/* ════════════
+   D-Day 목록
+════════════ */
+.dday-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dday-list::-webkit-scrollbar       { width: 4px; }
+.dday-list::-webkit-scrollbar-track { background: transparent; }
+.dday-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* D-Day 카드 */
+.dday-item {
+  position: relative;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--dday);
+  border-radius: 8px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.dday-item:hover {
+  background: var(--hover);
+  transform: translateX(2px);
+}
+
+.dday-item .event-title {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dday-item .event-date-small {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+/* D-Day 상태 뱃지 */
+.dday-badge {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.dday-badge.past        { background: rgba(247, 106, 140, 0.15); color: var(--dday); }
+.dday-badge.today-badge { background: var(--dday); color: #fff; }
+.dday-badge.future      { background: rgba(124, 106, 247, 0.15); color: var(--accent); }
+
+/* 빈 상태 안내 */
+.dday-empty {
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.82rem;
+  padding: 30px 0;
+  line-height: 1.8;
+}
+
+/* 삭제 버튼 (hover 시 표시) */
+.delete-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 2px 5px;
+  border-radius: 4px;
+  line-height: 1;
+  transition: all 0.1s;
+  opacity: 0;
+}
+
+.dday-item:hover .delete-btn { opacity: 1; }
+
+.delete-btn:hover {
+  color: var(--dday);
+  background: rgba(247, 106, 140, 0.1);
+}

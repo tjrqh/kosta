@@ -1,0 +1,119 @@
+/* ── 캘린더 패널 컨테이너 ── */
+.calendar-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* ── 요일 헤더 행 (일~토) ── */
+.weekday-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  flex-shrink: 0;
+}
+
+.weekday-header div {
+  text-align: center;
+  padding: 10px 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.weekday-header div:first-child { color: var(--dday); }   /* 일 */
+.weekday-header div:last-child  { color: #7aaeff; }        /* 토 */
+
+/* ── 날짜 그리드 ── */
+.calendar-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: 1fr;
+  overflow: hidden;
+}
+
+/* ── 날짜 셀 ── */
+.cal-cell {
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 8px 4px;
+  cursor: pointer;
+  transition: background 0.1s;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.cal-cell:nth-child(7n) { border-right: none; }
+.cal-cell:hover         { background: var(--hover); }
+.cal-cell.other-month   { opacity: 0.3; }
+
+/* ── 날짜 숫자 원형 ── */
+.day-number {
+  font-size: 0.82rem;
+  font-weight: 500;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-bottom: 3px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: all 0.1s;
+}
+
+/* 오늘 날짜 강조 */
+.cal-cell.today .day-number {
+  background: var(--today-bg);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(124, 106, 247, 0.5);
+}
+
+/* 요일별 숫자 색상 */
+.cal-cell.sunday  .day-number { color: var(--dday); }
+.cal-cell.saturday .day-number { color: #7aaeff; }
+.cal-cell.today   .day-number { color: #fff; }    /* today가 마지막에 와야 덮어씀 */
+
+/* ── 셀 안 이벤트 목록 ── */
+.cell-events {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* 이벤트 칩 */
+.cell-event {
+  font-size: 0.7rem;
+  padding: 2px 5px;
+  border-radius: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.1s;
+}
+
+.cell-event:hover    { opacity: 0.8; }
+.cell-event.is-dday  { background: rgba(247, 106, 140, 0.2);  color: var(--dday); }
+.cell-event.is-event { background: rgba(106, 247, 194, 0.15); color: var(--event); }
+
+/* 더보기 텍스트 */
+.more-events {
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  padding: 1px 4px;
+}

@@ -1,0 +1,41 @@
+/* ── CSS 변수 ── */
+:root {
+  --bg:         #0f0f13;
+  --surface:    #1a1a24;
+  --surface2:   #22222f;
+  --border:     #2e2e40;
+  --accent:     #7c6af7;
+  --accent2:    #f76a8c;
+  --dday:       #f76a8c;
+  --event:      #6af7c2;
+  --text:       #e8e8f0;
+  --text-muted: #7878a0;
+  --text-dim:   #4a4a6a;
+  --today-bg:   #7c6af7;
+  --hover:      #26263a;
+}
+
+/* ── 전체 리셋 ── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ── body ── */
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── 전체 2분할 컨테이너 ── */
+.main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
