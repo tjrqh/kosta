@@ -1,7 +1,3 @@
-/* ════════════════════════════════════════
-   app.js  —  My Calendar Logic
-════════════════════════════════════════ */
-
 // ── STATE ──────────────────────────────
 let events = JSON.parse(localStorage.getItem('mycal_events') || '[]');
 let currentYear, currentMonth;
@@ -12,9 +8,7 @@ const today = new Date();
 today.setHours(0, 0, 0, 0);
 
 
-// ══════════════════════════════════════
 //  INIT
-// ══════════════════════════════════════
 function init() {
   currentYear  = today.getFullYear();
   currentMonth = today.getMonth();
@@ -23,17 +17,13 @@ function init() {
 }
 
 
-// ══════════════════════════════════════
 //  PERSISTENCE
-// ══════════════════════════════════════
 function saveEvents() {
   localStorage.setItem('mycal_events', JSON.stringify(events));
 }
 
 
-// ══════════════════════════════════════
 //  DATE UTILITIES
-// ══════════════════════════════════════
 
 /** "YYYY-MM-DD" 형식의 키 생성 */
 function toDateKey(y, m, d) {
@@ -68,9 +58,7 @@ function formatDate(key) {
 }
 
 
-// ══════════════════════════════════════
 //  RENDER — 메인 렌더 진입점
-// ══════════════════════════════════════
 function render() {
   renderHeader();
   renderCalendar();
@@ -248,10 +236,6 @@ function renderMiniCal() {
   container.innerHTML = html;
 }
 
-
-// ══════════════════════════════════════
-//  MODAL  —  일정 추가 다이얼로그
-// ══════════════════════════════════════
 function openModal() {
   document.getElementById('modalOverlay').classList.add('open');
   document.getElementById('eventTitle').focus();
@@ -295,9 +279,7 @@ function flashError(id) {
 }
 
 
-// ══════════════════════════════════════
 //  NAVIGATION  —  월 이동
-// ══════════════════════════════════════
 function changeMonth(delta) {
   currentMonth += delta;
   if (currentMonth > 11) { currentMonth = 0; currentYear++; }
@@ -312,9 +294,7 @@ function jumpToDate(y, m) {
 }
 
 
-// ══════════════════════════════════════
 //  DETAIL POPUP  —  이벤트 상세 팝업
-// ══════════════════════════════════════
 function showDetail(ev, e) {
   e.stopPropagation();
   const popup = document.getElementById('detailPopup');
@@ -357,9 +337,7 @@ function hideDetail() {
 }
 
 
-// ══════════════════════════════════════
 //  DELETE
-// ══════════════════════════════════════
 function deleteEvent(id, e) {
   if (e) e.stopPropagation();
   events = events.filter(ev => ev.id !== id);
@@ -368,10 +346,6 @@ function deleteEvent(id, e) {
   hideDetail();
 }
 
-
-// ══════════════════════════════════════
-//  EVENT BINDINGS  —  DOM 이벤트 연결
-// ══════════════════════════════════════
 function bindEvents() {
   // 헤더 버튼
   document.getElementById('prevBtn').addEventListener('click', () => changeMonth(-1));
@@ -406,10 +380,16 @@ function bindEvents() {
     const popup = document.getElementById('detailPopup');
     if (popup.classList.contains('show') && !popup.contains(e.target)) hideDetail();
   });
+
+    // 마우스 휠 → 월 이동 (휠 1번 = 1달)
+  let wheelLocked = false;
+  document.getElementById('calGrid').addEventListener('wheel', (e) => {
+    e.preventDefault();
+    if (wheelLocked) return;
+    changeMonth(e.deltaY > 0 ? 1 : -1);
+    wheelLocked = true;
+    setTimeout(() => { wheelLocked = false; }, 600);
+  }, { passive: false });
 }
 
-
-// ══════════════════════════════════════
-//  ENTRY POINT
-// ══════════════════════════════════════
 init();
